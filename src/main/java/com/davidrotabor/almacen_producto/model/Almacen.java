@@ -1,9 +1,6 @@
 package com.davidrotabor.almacen_producto.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
