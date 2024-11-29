@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  # Servicio para construir el JAR utilizando Maven
+  maven:
+    image: maven:3.8.6-openjdk-11-slim
+    container_name: maven_build
+    working_dir: /app
+    command: mvn clean package  # Ejecuta el comando Maven para generar el JAR
+
+  # Servicio para ejecutar la aplicación Spring Boot en el contenedor
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: almacen_producto_app
+    depends_on:
+      - maven  # Asegura que el servicio maven haya generado el JAR antes de ejecutar el app
+    ports:
+      - "8080:8080"  # Mapea el puerto 8080
+    volumes:
+      - target:/app/target  # Volumen compartido para el JAR generado por Maven
+    environment:
+      SPRING_PROFILES_ACTIVE: docker  # Configura el perfil activo, si es necesario
+
+volumes:
+  target:  # Volumen para almacenar los archivos generados por Maven (el JAR)
